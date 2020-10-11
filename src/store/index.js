@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import forecast from "@/store/modules/forecast";
+import geocoding from "@/store/modules/geocoding";
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    forecast
+    forecast,
+    geocoding
   }
 });

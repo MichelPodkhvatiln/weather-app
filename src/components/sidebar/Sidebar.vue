@@ -1,6 +1,9 @@
 <template>
   <aside class="sidebar">
-    <div></div>
+    <div>
+      <input type="text" v-model="address" />
+      <button @click="search">Search</button>
+    </div>
     <degrees-monitor />
   </aside>
 </template>
@@ -15,8 +18,20 @@ export default {
     DegreesMonitor
   },
 
+  data() {
+    return {
+      address: ""
+    };
+  },
+
   async beforeMount() {
     await this.$store.dispatch("getPosition");
+  },
+
+  methods: {
+    search(){
+      this.$store.dispatch("getInfo", this.address)
+    }
   }
 };
 </script>

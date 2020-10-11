@@ -85,12 +85,12 @@ export default {
       });
     },
 
-    async getForecast({ state, commit }) {
+    async getForecast({ state, commit }, payload) {
       try {
         const res = await axios.get("/onecall", {
           params: {
-            lat: state.position.lat,
-            lon: state.position.lon,
+            lat: payload ? payload.lat : state.position.lat,
+            lon: payload ? payload.lon : state.position.lon,
             appid: `${process.env.VUE_APP_OPENWEATHER_API_KEY}`,
             units: "metric"
           }
