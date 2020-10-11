@@ -46,17 +46,18 @@ function weatherInfoFormatter(data) {
 
 function infoFormatter(data, extended = false) {
   return {
+    id: moment(data.dt * 1000).format("DD-MM-YYYY"),
     clouds: data.clouds,
     dewPoint: data.dew_point,
-    dt: moment(data.dt * 1000).format("DD MMMM YYYY"),
+    dt: moment(data.dt * 1000).format("DD MMMM YYYY HH:mm"),
     feelsLike: extended ? feelLikeFormatter(data.feels_like) : data.feels_like,
     humidity: data.humidity,
     pressure: data.pressure,
     sunrise: moment(data.sunrise * 1000).format("HH:mm"),
     sunset: moment(data.sunset * 1000).format("HH:mm"),
     temp: extended ? tempFormatter(data.temp) : data.temp,
-    uvi: data.uvi,
-    visibility: data.visibility,
+    uvi: data.uvi ? data.uvi : null,
+    visibility: data.visibility ? data.visibility : null,
     weather: weatherInfoFormatter(data.weather),
     windDeg: data.wind_deg,
     windSpeed: data.wind_speed

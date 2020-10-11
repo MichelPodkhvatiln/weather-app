@@ -1,4 +1,5 @@
 import axios from "@/utils/axios";
+import moment from "moment";
 import { openWeatherFormatter } from "@/utils/open-weather-helper";
 
 export default {
@@ -23,6 +24,24 @@ export default {
     },
     hourlyForecats(state) {
       return state.forecast.hourly;
+    },
+    currentExtendedTemp(state) {
+      const currentDate = state.forecast.current.id;
+      const currentDay = state.forecast.daily.find(
+        day => day.id === currentDate
+      );
+
+      return {
+        current: state.forecast.current.temp,
+        min: currentDay.temp.min,
+        max: currentDay.temp.max
+      };
+    },
+    currentWeatherDescr(state) {
+      return state.forecast.current.weather;
+    },
+    currentDateTime(state) {
+      return moment(state.forecast.current.dtRaw).format("DD MMMM YYYY HH:mm");
     }
   },
   mutations: {
