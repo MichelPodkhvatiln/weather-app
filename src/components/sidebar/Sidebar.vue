@@ -9,7 +9,7 @@ export default {
   name: "Sidebar",
 
   async beforeMount() {
-    await this.$store.dispatch('getForecast')
+    await this.$store.dispatch('getPosition')
   }
 }
 </script>
