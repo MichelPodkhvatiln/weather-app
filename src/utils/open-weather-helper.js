@@ -1,14 +1,5 @@
 import moment from "moment";
-
-function objectIsEmpty(data) {
-  return (
-    data && Object.entries(data).length === 0 && data.constructor === Object
-  );
-}
-
-function arrayIsEmpty(data) {
-  return data && !Array.isArray(data);
-}
+import { objectIsEmpty, isNotArray } from "@/utils/check-helper";
 
 function feelLikeFormatter(data) {
   if (objectIsEmpty(data)) {
@@ -39,7 +30,7 @@ function tempFormatter(data) {
 }
 
 function weatherInfoFormatter(data) {
-  if (arrayIsEmpty(data)) {
+  if (isNotArray(data)) {
     return [];
   }
 
@@ -81,7 +72,7 @@ function currentFormatter(data) {
 }
 
 function dailyFormatter(data) {
-  if (arrayIsEmpty(data)) {
+  if (isNotArray(data)) {
     return [];
   }
 
@@ -89,14 +80,14 @@ function dailyFormatter(data) {
 }
 
 function hourlyFormatter(data) {
-  if (arrayIsEmpty(data)) {
+  if (isNotArray(data)) {
     return [];
   }
 
   return data.map(hourlyData => infoFormatter(hourlyData));
 }
 
-export function responseFormatter(type, data) {
+export function openWeatherFormatter(type, data) {
   const types = {
     current: currentFormatter,
     daily: dailyFormatter,

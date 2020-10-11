@@ -1,17 +1,28 @@
 import axios from "@/utils/axios";
-import { responseFormatter } from "@/utils/response-formatter";
+import { openWeatherFormatter } from "@/utils/open-weather-helper";
 
 export default {
   state: {
-    forecast: {},
+    forecast: {
+      current: {},
+      daily: [],
+      hourly: [],
+      meta: {}
+    },
     position: {
       lat: 0,
       lon: 0
     }
   },
   getters: {
-    forecast(state) {
-      return state.forecast;
+    currentForecast(state) {
+      return state.forecast.current;
+    },
+    dailyForecast(state) {
+      return state.forecast.daily;
+    },
+    hourlyForecats(state) {
+      return state.forecast.hourly;
     }
   },
   mutations: {
@@ -66,9 +77,9 @@ export default {
           }
         });
 
-        const current = responseFormatter("current", res.data.current);
-        const daily = responseFormatter("daily", res.data.daily);
-        const hourly = responseFormatter("hourly", res.data.hourly);
+        const current = openWeatherFormatter("current", res.data.current);
+        const daily = openWeatherFormatter("daily", res.data.daily);
+        const hourly = openWeatherFormatter("hourly", res.data.hourly);
         const meta = {
           lat: res.data.lat,
           lon: res.data.lon,
