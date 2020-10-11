@@ -1,7 +1,9 @@
 import axios from "@/utils/axios";
+import { responseFormatter } from "@/utils/response-formatter";
+
 export default {
   state: {
-    forecast: null,
+    forecast: {},
     position: {
       lat: 0,
       lon: 0
@@ -13,12 +15,21 @@ export default {
     }
   },
   mutations: {
-    setForecast(state, payload) {
-      state.forecast = payload;
-    },
     setPosition(state, payload) {
       state.position.lat = payload.lat;
       state.position.lon = payload.lon;
+    },
+    setForecastCurrent(state, payload) {
+      state.forecast.current = payload;
+    },
+    setForecastDaily(state, payload) {
+      state.forecast.daily = payload;
+    },
+    setForecastHourly(state, payload) {
+      state.forecast.hourly = payload;
+    },
+    setForecastMeta(state, payload) {
+      state.forecast.meta = payload;
     }
   },
   actions: {
@@ -55,7 +66,20 @@ export default {
           }
         });
 
-        commit("setForecast", res.data);
+        const current = responseFormatter("current", res.data.current);
+        const daily = responseFormatter("daily", res.data.daily);
+        const hourly = responseFormatter("hourly", res.data.hourly);
+        const meta = {
+          lat: res.data.lat,
+          lon: res.data.lon,
+          timezone: res.data.timezone,
+          timezoneOffset: res.data.timezone_offset
+        };
+
+        commit("setForecastCurrent", current);
+        commit("setForecastDaily", daily);
+        commit("setForecastHourly", hourly);
+        commit("setForecastMeta", meta);
       } catch (error) {
         throw new Error(error);
       }
