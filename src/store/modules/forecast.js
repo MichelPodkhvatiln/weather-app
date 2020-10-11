@@ -50,7 +50,6 @@ export default {
           params: {
             lat: state.position.lat,
             lon: state.position.lon,
-            exclude: "current",
             appid: `${process.env.VUE_APP_OPENWEATHER_API_KEY}`,
             units: "metric"
           }
