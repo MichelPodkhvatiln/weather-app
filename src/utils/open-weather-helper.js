@@ -59,7 +59,7 @@ function infoFormatter(data, extended = false) {
     visibility: data.visibility,
     weather: weatherInfoFormatter(data.weather),
     windDeg: data.wind_deg,
-    windSpeed: data
+    windSpeed: data.wind_speed
   };
 }
 
