@@ -85,7 +85,7 @@ export default {
       });
     },
 
-    async getForecast({ state, commit }, payload) {
+    async getForecast({ state, commit, dispatch }, payload) {
       try {
         const res = await axios.get("/onecall", {
           params: {
@@ -110,6 +110,10 @@ export default {
         commit("setForecastDaily", daily);
         commit("setForecastHourly", hourly);
         commit("setForecastMeta", meta);
+        if (!payload) {
+          const latlng = `${state.position.lat},${state.position.lon}`;
+          await dispatch("getReverseInfo", latlng);
+        }
       } catch (error) {
         throw new Error(error);
       }

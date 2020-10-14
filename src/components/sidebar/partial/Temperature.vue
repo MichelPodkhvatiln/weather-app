@@ -46,6 +46,9 @@
     <div>
       {{ currentDateTime }}
     </div>
+    <div>
+      {{ address }}
+    </div>
   </div>
 </template>
 
@@ -58,7 +61,8 @@ export default {
     ...mapGetters([
       "currentExtendedTemp",
       "currentWeatherDescr",
-      "currentDateTime"
+      "currentDateTime",
+      "address"
     ])
   },
   filters: {
