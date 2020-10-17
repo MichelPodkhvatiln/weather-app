@@ -1,34 +1,57 @@
 <template>
-  <form class="search-form" @submit.prevent="search">
-    <input
-      class="search-form__input"
-      type="search"
-      v-model="address"
-      placeholder="Enter location..."
-    />
-    <button class="search-form__button" type="submit">
-      <i class="fas fa-search" />
-    </button>
+  <form class="search-form" @submit.prevent="">
+    <template v-if="!loading">
+      <input
+        class="search-form__input"
+        type="search"
+        v-model="address"
+        placeholder="Enter location..."
+        @keyup.enter.prevent="search"
+      />
+      <button class="search-form__button" type="button" @click="search">
+        <i class="fas fa-search" />
+      </button>
+    </template>
+
+    <template v-else>
+      <span class="search-form__info">Searching...</span>
+      <spring-spinner :animation-duration="3000" :size="25" color="#ffffff" />
+    </template>
   </form>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 
+import { SpringSpinner } from "epic-spinners";
+
 export default {
   name: "SearchBar",
 
+  components: {
+    SpringSpinner
+  },
+
   data() {
     return {
-      address: ""
+      address: "",
+      loading: false
     };
   },
 
   methods: {
     ...mapActions("geocoding", ["getInfo"]),
 
-    search() {
-      this.getInfo(this.address);
+    async search() {
+      try {
+        this.loading = true;
+        await this.getInfo(this.address);
+      } catch (error) {
+        console.error(error);
+      }
+
+      this.address = "";
+      this.loading = false;
     }
   }
 };
@@ -36,24 +59,41 @@ export default {
 
 <style scoped lang="scss">
 $main: #ffffff;
+$accent: #000000;
 
-.search-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.search-form__input {
+@mixin main-styling($main) {
   padding: 5px 10px;
   color: $main;
   font-size: 1rem;
   background: rgba($main, 0.3);
   border: 1px solid rgba($main, 0.5);
-  border-right: none;
+}
+
+@mixin on-actions-style($accent) {
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background: rgba($accent, 0.1);
+  }
 
   &:focus {
-    outline-color: $main;
+    outline: none;
+    background: rgba($accent, 0.1);
   }
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-form__input {
+  width: 80%;
+  @include main-styling($main);
+  border-right: none;
+  @include on-actions-style($accent);
 
   &::placeholder {
     color: $main;
@@ -61,13 +101,15 @@ $main: #ffffff;
 }
 
 .search-form__button {
-  padding: 5px 10px;
+  width: 20%;
+  cursor: pointer;
+  @include main-styling($main);
+  @include on-actions-style($accent);
+}
+
+.search-form__info {
+  margin: 0 10px;
   color: $main;
-  font-size: 1rem;
-  background: rgba($main, 0.3);
-  border: 1px solid rgba($main, 0.5);
-  &:focus {
-    outline-color: $main;
-  }
+  font-size: 1.25rem;
 }
 </style>

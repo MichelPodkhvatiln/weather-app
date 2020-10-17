@@ -48,10 +48,14 @@ export default {
       );
 
       commit("setGeocoding", geocodingFormatter(res.data));
-      await dispatch("getForecast", {
-        lat: geocodingFormatter(res.data).lat,
-        lon: geocodingFormatter(res.data).lon
-      });
+      await dispatch(
+        "forecast/getForecast",
+        {
+          lat: geocodingFormatter(res.data).lat,
+          lon: geocodingFormatter(res.data).lon
+        },
+        { root: true }
+      );
     },
     async getReverseInfo({ commit }, payload) {
       const res = await axios.get(

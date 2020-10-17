@@ -32,8 +32,10 @@ export default {
 <style scoped lang="scss">
 .sidebar {
   display: grid;
-  grid-template-rows: 0.5fr 2fr 1fr;
+  grid-template-rows: 1fr 5fr;
   grid-template-columns: 1fr;
+  padding: 10px;
+  min-width: 320px;
   color: whitesmoke;
   background-color: #4d9ac5;
   background-image: linear-gradient(0deg, #4d9ac5 0%, #8bb0e2 100%);
