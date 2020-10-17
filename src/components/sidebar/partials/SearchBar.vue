@@ -48,6 +48,10 @@ export default {
     ...mapActions("geocoding", ["getInfo"]),
 
     async search() {
+      if (!this.address.trim().length) {
+        return;
+      }
+
       try {
         this.isSearch = true;
 
