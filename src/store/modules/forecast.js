@@ -53,6 +53,14 @@ export default {
     setUnits(state, payload) {
       state.units = payload;
     },
+    resetForecast(state) {
+      state.forecast = {
+        current: {},
+        daily: [],
+        hourly: [],
+        meta: {}
+      };
+    },
     setCurrentPosition(state, payload) {
       state.currentPosition.lat = payload.lat;
       state.currentPosition.lon = payload.lon;
@@ -108,6 +116,8 @@ export default {
 
     async getForecast({ state, commit, dispatch }, payload) {
       try {
+        commit("resetForecast");
+
         const res = await axios.get("/onecall", {
           params: {
             lat: payload ? payload.lat : state.currentPosition.lat,

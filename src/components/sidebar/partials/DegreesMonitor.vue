@@ -1,12 +1,10 @@
 <template>
-  <div class="monitor">
-    <template v-if="!loading">
-      <current-temperature />
-      <temperature />
-    </template>
-    <template v-else>
-      <spring-spinner :animation-duration="3000" :size="60" color="#ffffff" />
-    </template>
+  <div v-if="!isLoading" class="monitor">
+    <current-temperature />
+    <temperature />
+  </div>
+  <div v-else class="monitor--loading">
+    <spring-spinner :animation-duration="3000" :size="60" color="#ffffff" />
   </div>
 </template>
 
@@ -30,7 +28,7 @@ export default {
   computed: {
     ...mapGetters("forecast", ["currentForecast"]),
 
-    loading() {
+    isLoading() {
       return objectIsEmpty(this.currentForecast);
     }
   }
@@ -40,8 +38,14 @@ export default {
 <style scoped lang="scss">
 .monitor {
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 3fr;
   grid-template-columns: 1fr;
   padding: 10px;
+}
+
+.monitor--loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

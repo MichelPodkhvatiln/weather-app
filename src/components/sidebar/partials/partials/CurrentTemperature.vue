@@ -64,6 +64,7 @@ $accent: #000000;
   display: flex;
   justify-content: center;
   align-items: start;
+  margin: 15px 0;
 }
 
 .current-temperature__monitor--value {
@@ -74,19 +75,21 @@ $accent: #000000;
   margin: 0 5px;
   padding: 5px;
   min-width: 60px;
-  color: $main;
-  font-size: 2.5rem;
+  color: rgba($main, 0.85);
+  font-size: 2.75rem;
   background-color: transparent;
   border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
 
   &:hover {
+    color: rgba($main, 1);
     background-color: rgba($accent, 0.1);
   }
 
   &:focus {
+    color: rgba($main, 1);
     outline: none;
     background-color: rgba($accent, 0.1);
   }
@@ -94,7 +97,8 @@ $accent: #000000;
 
 .current-temperature__descr {
   display: flex;
-  justify-content: space-around;
-  font-size: 1rem;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.25rem;
 }
 </style>

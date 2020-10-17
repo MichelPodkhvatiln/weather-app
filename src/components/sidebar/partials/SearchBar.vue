@@ -1,42 +1,47 @@
 <template>
   <form class="search-form" @submit.prevent="">
-    <template v-if="!loading">
+    <template v-if="!isLoading">
       <input
         class="search-form__input"
         type="search"
         v-model="address"
         placeholder="Enter location..."
         @keyup.enter.prevent="search"
+        :disabled="isSearch"
       />
-      <button class="search-form__button" type="button" @click="search">
+      <button
+        class="search-form__button"
+        type="button"
+        @click="search"
+        :disabled="isSearch"
+      >
         <i class="fas fa-search" />
       </button>
-    </template>
-
-    <template v-else>
-      <span class="search-form__info">Searching...</span>
-      <spring-spinner :animation-duration="3000" :size="25" color="#ffffff" />
     </template>
   </form>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
-import { SpringSpinner } from "epic-spinners";
+import { objectIsEmpty } from "@/utils/check-helper";
 
 export default {
   name: "SearchBar",
 
-  components: {
-    SpringSpinner
-  },
-
   data() {
     return {
-      address: "",
-      loading: false
+      isSearch: false,
+      address: ""
     };
+  },
+
+  computed: {
+    ...mapGetters("forecast", ["currentForecast"]),
+
+    isLoading() {
+      return objectIsEmpty(this.currentForecast);
+    }
   },
 
   methods: {
@@ -44,14 +49,15 @@ export default {
 
     async search() {
       try {
-        this.loading = true;
+        this.isSearch = true;
+
         await this.getInfo(this.address);
       } catch (error) {
         console.error(error);
       }
 
+      this.isSearch = false;
       this.address = "";
-      this.loading = false;
     }
   }
 };
@@ -62,36 +68,42 @@ $main: #ffffff;
 $accent: #000000;
 
 @mixin main-styling($main) {
-  padding: 5px 10px;
+  padding: 7px 10px;
   color: rgba($main, 0.85);
   font-size: 1rem;
-  background: rgba($main, 0.3);
+  background-color: rgba($main, 0.3);
   border: 1px solid rgba($main, 0.5);
 
   &::placeholder {
     color: rgba($main, 0.85);
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }
 
 @mixin on-actions-style($accent) {
   transition: all 0.3s ease-in-out;
 
-  &:hover {
-    color: rgba($main, 1);
-    background: rgba($accent, 0.1);
-
-    &::placeholder {
+  &:not([disabled]) {
+    &:hover {
       color: rgba($main, 1);
+      background: rgba($accent, 0.1);
+
+      &::placeholder {
+        color: rgba($main, 1);
+      }
     }
-  }
 
-  &:focus {
-    color: rgba($main, 1);
-    outline: none;
-    background: rgba($accent, 0.1);
-
-    &::placeholder {
+    &:focus {
       color: rgba($main, 1);
+      outline: none;
+      background: rgba($accent, 0.1);
+
+      &::placeholder {
+        color: rgba($main, 1);
+      }
     }
   }
 }
@@ -108,6 +120,10 @@ $accent: #000000;
   @include main-styling($main);
   border-right: none;
   @include on-actions-style($accent);
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .search-form__button {
@@ -115,6 +131,10 @@ $accent: #000000;
   cursor: pointer;
   @include main-styling($main);
   @include on-actions-style($accent);
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .search-form__info {
