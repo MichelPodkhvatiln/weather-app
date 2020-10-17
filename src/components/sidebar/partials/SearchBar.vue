@@ -63,22 +63,36 @@ $accent: #000000;
 
 @mixin main-styling($main) {
   padding: 5px 10px;
-  color: $main;
+  color: rgba($main, 0.85);
   font-size: 1rem;
   background: rgba($main, 0.3);
   border: 1px solid rgba($main, 0.5);
+
+  &::placeholder {
+    color: rgba($main, 0.85);
+  }
 }
 
 @mixin on-actions-style($accent) {
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
+    color: rgba($main, 1);
     background: rgba($accent, 0.1);
+
+    &::placeholder {
+      color: rgba($main, 1);
+    }
   }
 
   &:focus {
+    color: rgba($main, 1);
     outline: none;
     background: rgba($accent, 0.1);
+
+    &::placeholder {
+      color: rgba($main, 1);
+    }
   }
 }
 
@@ -94,10 +108,6 @@ $accent: #000000;
   @include main-styling($main);
   border-right: none;
   @include on-actions-style($accent);
-
-  &::placeholder {
-    color: $main;
-  }
 }
 
 .search-form__button {
