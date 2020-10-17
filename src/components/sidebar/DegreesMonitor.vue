@@ -4,7 +4,7 @@
       <temperature />
     </template>
     <template v-else>
-      <h1>Loading...</h1>
+      <spring-spinner :animation-duration="3000" :size="60" color="#ffffff" />
     </template>
   </div>
 </template>
@@ -13,12 +13,14 @@
 import { mapGetters } from "vuex";
 import { objectIsEmpty } from "@/utils/check-helper";
 
+import { SpringSpinner } from "epic-spinners";
 import Temperature from "@/components/sidebar/partial/Temperature";
 
 export default {
   name: "DegreesMonitor",
   components: {
-    Temperature
+    Temperature,
+    SpringSpinner
   },
   computed: {
     ...mapGetters(["currentForecast"]),
