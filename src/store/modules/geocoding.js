@@ -3,6 +3,7 @@ import { geocodingFormatter } from "@/utils/geocoding-helper";
 import { objectIsEmpty } from "@/utils/check-helper";
 
 export default {
+  namespaced: true,
   state: {
     geocoding: {
       address: "",

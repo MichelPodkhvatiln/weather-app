@@ -3,6 +3,7 @@ import moment from "moment";
 import { openWeatherFormatter } from "@/utils/open-weather-helper";
 
 export default {
+  namespaced: true,
   state: {
     forecast: {
       current: {},
@@ -112,7 +113,7 @@ export default {
         commit("setForecastMeta", meta);
         if (!payload) {
           const latlng = `${state.position.lat},${state.position.lon}`;
-          await dispatch("getReverseInfo", latlng);
+          await dispatch("geocoding/getReverseInfo", latlng, { root: true });
         }
       } catch (error) {
         throw new Error(error);

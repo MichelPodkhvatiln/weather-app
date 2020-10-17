@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 import SearchBar from "@/components/sidebar/partials/SearchBar.vue";
 import DegreesMonitor from "@/components/sidebar/partials/DegreesMonitor.vue";
 
@@ -18,7 +20,11 @@ export default {
   },
 
   async beforeMount() {
-    await this.$store.dispatch("getPosition");
+    await this.getPosition();
+  },
+
+  methods: {
+    ...mapActions("forecast", ["getPosition"])
   }
 };
 </script>
@@ -26,7 +32,7 @@ export default {
 <style scoped lang="scss">
 .sidebar {
   display: grid;
-  grid-template-rows: 1fr 2fr 1fr;
+  grid-template-rows: 0.5fr 2fr 1fr;
   grid-template-columns: 1fr;
   color: whitesmoke;
   background-color: #4d9ac5;

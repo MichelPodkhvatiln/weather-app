@@ -18,12 +18,15 @@ import Temperature from "@/components/sidebar/partials/partials/Temperature.vue"
 
 export default {
   name: "DegreesMonitor",
+
   components: {
     Temperature,
     SpringSpinner
   },
+
   computed: {
-    ...mapGetters(["currentForecast"]),
+    ...mapGetters("forecast", ["currentForecast"]),
+
     loading() {
       return objectIsEmpty(this.currentForecast);
     }

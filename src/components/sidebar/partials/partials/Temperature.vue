@@ -56,15 +56,17 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Temperature",
+
   computed: {
-    ...mapGetters([
+    ...mapGetters("forecast", [
       "currentExtendedTemp",
       "currentWeatherDescr",
-      "currentDateTime",
-      "address",
-      "coords"
-    ])
+      "currentDateTime"
+    ]),
+
+    ...mapGetters("geocoding", ["address", "coords"])
   },
+
   filters: {
     rounded(value) {
       return value.toFixed();
