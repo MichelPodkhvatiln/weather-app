@@ -1,22 +1,22 @@
 <template>
   <div class="temperature">
-    <div class="current-temp">
-      <span class="current-temp__value">
-        {{ currentExtendedTemp.current | rounded }}
-      </span>
-      <strong class="current-temp__units">
-        °C
-      </strong>
-    </div>
-    <div v-if="currentWeatherDescr" class="weather-descr">
-      <strong
-        v-for="info in currentWeatherDescr"
-        :key="info.main"
-        class="weather-descr--note"
-      >
-        {{ info.main }}
-      </strong>
-    </div>
+<!--    <div class="current-temp">-->
+<!--      <span class="current-temp__value">-->
+<!--        {{ currentExtendedTemp.current | rounded }}-->
+<!--      </span>-->
+<!--      <strong class="current-temp__units">-->
+<!--        °C-->
+<!--      </strong>-->
+<!--    </div>-->
+<!--    <div v-if="currentWeatherDescr" class="weather-descr">-->
+<!--      <strong-->
+<!--        v-for="info in currentWeatherDescr"-->
+<!--        :key="info.main"-->
+<!--        class="weather-descr&#45;&#45;note"-->
+<!--      >-->
+<!--        {{ info.main }}-->
+<!--      </strong>-->
+<!--    </div>-->
     <div class="grade-temp">
       <div class="grade-temp__item">
         <span class="grade-temp__item--value">

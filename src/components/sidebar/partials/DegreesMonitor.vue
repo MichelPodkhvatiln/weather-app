@@ -1,6 +1,7 @@
 <template>
   <div class="monitor">
     <template v-if="!loading">
+      <current-temperature />
       <temperature />
     </template>
     <template v-else>
@@ -14,12 +15,14 @@ import { mapGetters } from "vuex";
 import { objectIsEmpty } from "@/utils/check-helper";
 
 import { SpringSpinner } from "epic-spinners";
+import CurrentTemperature from "@/components/sidebar/partials/partials/CurrentTemperature";
 import Temperature from "@/components/sidebar/partials/partials/Temperature.vue";
 
 export default {
   name: "DegreesMonitor",
 
   components: {
+    CurrentTemperature,
     Temperature,
     SpringSpinner
   },

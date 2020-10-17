@@ -5,18 +5,22 @@ import { openWeatherFormatter } from "@/utils/open-weather-helper";
 export default {
   namespaced: true,
   state: {
+    units: "metric",
     forecast: {
       current: {},
       daily: [],
       hourly: [],
       meta: {}
     },
-    position: {
+    currentPosition: {
       lat: 0,
       lon: 0
     }
   },
   getters: {
+    units(state) {
+      return state.units;
+    },
     currentForecast(state) {
       return state.forecast.current;
     },
@@ -46,9 +50,12 @@ export default {
     }
   },
   mutations: {
-    setPosition(state, payload) {
-      state.position.lat = payload.lat;
-      state.position.lon = payload.lon;
+    setUnits(state, payload) {
+      state.units = payload;
+    },
+    setCurrentPosition(state, payload) {
+      state.currentPosition.lat = payload.lat;
+      state.currentPosition.lon = payload.lon;
     },
     setForecastCurrent(state, payload) {
       state.forecast.current = payload;
@@ -64,6 +71,19 @@ export default {
     }
   },
   actions: {
+    async changeUnits({ state, commit, dispatch }) {
+      if (state.units === "metric") {
+        commit("setUnits", "imperial");
+        await dispatch("getForecast");
+        return;
+      }
+
+      if (state.units === "imperial") {
+        commit("setUnits", "metric");
+        await dispatch("getForecast");
+        return;
+      }
+    },
     async getPosition({ dispatch }) {
       if (!("geolocation" in navigator)) {
         //hardcoded Moscow lat and lon
@@ -90,10 +110,10 @@ export default {
       try {
         const res = await axios.get("/onecall", {
           params: {
-            lat: payload ? payload.lat : state.position.lat,
-            lon: payload ? payload.lon : state.position.lon,
+            lat: payload ? payload.lat : state.currentPosition.lat,
+            lon: payload ? payload.lon : state.currentPosition.lon,
             appid: `${process.env.VUE_APP_OPENWEATHER_API_KEY}`,
-            units: "metric"
+            units: state.units
           }
         });
 
@@ -112,7 +132,7 @@ export default {
         commit("setForecastHourly", hourly);
         commit("setForecastMeta", meta);
         if (!payload) {
-          const latlng = `${state.position.lat},${state.position.lon}`;
+          const latlng = `${state.currentPosition.lat},${state.currentPosition.lon}`;
           await dispatch("geocoding/getReverseInfo", latlng, { root: true });
         }
       } catch (error) {
@@ -121,7 +141,7 @@ export default {
     },
 
     async getForecastByCurrentPosition({ commit, dispatch }, payload) {
-      commit("setPosition", payload);
+      commit("setCurrentPosition", payload);
       await dispatch("getForecast");
     }
   }
