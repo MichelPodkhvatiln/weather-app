@@ -2,7 +2,7 @@
   <div class="current-temperature">
     <div class="current-temperature__monitor">
       <span class="current-temperature__monitor--value">
-        {{ currentExtendedTemp.current | rounded }}
+        {{ currentTemp | rounded }}
       </span>
       <button class="current-temperature__monitor--units" @click="changeUnits">
         <span v-if="units === 'metric'">
@@ -32,11 +32,7 @@ export default {
   name: "CurrentTemperature",
 
   computed: {
-    ...mapGetters("forecast", [
-      "units",
-      "currentExtendedTemp",
-      "currentWeatherDescr"
-    ])
+    ...mapGetters("forecast", ["units", "currentTemp", "currentWeatherDescr"])
   },
 
   methods: {

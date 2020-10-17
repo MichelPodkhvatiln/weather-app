@@ -30,6 +30,9 @@ export default {
     hourlyForecats(state) {
       return state.forecast.hourly;
     },
+    currentTemp(state) {
+      return state.forecast.current.temp;
+    },
     currentExtendedTemp(state) {
       const currentDate = state.forecast.current.id;
       const currentDay = state.forecast.daily.find(
@@ -37,7 +40,6 @@ export default {
       );
 
       return {
-        current: state.forecast.current.temp,
         min: currentDay.temp.min,
         max: currentDay.temp.max
       };
