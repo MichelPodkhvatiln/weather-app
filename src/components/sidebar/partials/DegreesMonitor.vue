@@ -14,7 +14,7 @@ import { mapGetters } from "vuex";
 import { objectIsEmpty } from "@/utils/check-helper";
 
 import { SpringSpinner } from "epic-spinners";
-import Temperature from "@/components/sidebar/partial/Temperature";
+import Temperature from "@/components/sidebar/partials/partials/Temperature.vue";
 
 export default {
   name: "DegreesMonitor",

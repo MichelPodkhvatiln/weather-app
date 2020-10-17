@@ -1,39 +1,24 @@
 <template>
   <aside class="sidebar">
-    <div>
-      <input type="text" v-model="address" placeholder="Enter location..." />
-      <button @click="search">
-        <i class="fas fa-search" />
-      </button>
-    </div>
+    <search-bar />
     <degrees-monitor />
   </aside>
 </template>
 
 <script>
-import DegreesMonitor from "@/components/sidebar/DegreesMonitor";
+import SearchBar from "@/components/sidebar/partials/SearchBar.vue";
+import DegreesMonitor from "@/components/sidebar/partials/DegreesMonitor.vue";
 
 export default {
   name: "Sidebar",
 
   components: {
-    DegreesMonitor
-  },
-
-  data() {
-    return {
-      address: ""
-    };
+    DegreesMonitor,
+    SearchBar
   },
 
   async beforeMount() {
     await this.$store.dispatch("getPosition");
-  },
-
-  methods: {
-    search() {
-      this.$store.dispatch("getInfo", this.address);
-    }
   }
 };
 </script>
