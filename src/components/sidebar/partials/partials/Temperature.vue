@@ -82,28 +82,6 @@ export default {
   grid-template-columns: 1fr;
 }
 
-.current-temp {
-  display: flex;
-  justify-content: center;
-}
-
-.current-temp__value {
-  font-size: 4.5rem;
-}
-
-.current-temp__units {
-  font-size: 2.5rem;
-}
-
-.weather-descr {
-  display: flex;
-  justify-content: space-around;
-  font-size: 1rem;
-}
-
-.weather-descr--note {
-}
-
 .grade-temp {
   display: flex;
   align-items: center;
