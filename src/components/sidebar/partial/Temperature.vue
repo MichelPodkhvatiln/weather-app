@@ -20,9 +20,7 @@
     <div class="grade-temp">
       <div class="grade-temp__item">
         <span class="grade-temp__item--value">
-          <svg width="20" height="20" viewBox="0 0 16 16">
-            <path fill="#ffffff80" d="M8 13l8-10H0l8 10z" />
-          </svg>
+          <i class="fas fa-temperature-low" />
 
           {{ currentExtendedTemp.min | rounded }}
         </span>
@@ -32,9 +30,7 @@
       </div>
       <div class="grade-temp__item">
         <span class="grade-temp__item--value">
-          <svg width="20" height="20" viewBox="0 0 16 16">
-            <path fill="#ffffff80" d="M8 3L0 13h16z" />
-          </svg>
+          <i class="fas fa-temperature-high" />
 
           {{ currentExtendedTemp.max | rounded }}
         </span>
@@ -44,10 +40,13 @@
       </div>
     </div>
     <div>
+      <i class="far fa-calendar-alt" />
       {{ currentDateTime }}
     </div>
     <div>
+      <i class="fas fa-map-marker-alt" />
       {{ address }}
+      {{ coords }}
     </div>
   </div>
 </template>
@@ -62,7 +61,8 @@ export default {
       "currentExtendedTemp",
       "currentWeatherDescr",
       "currentDateTime",
-      "address"
+      "address",
+      "coords"
     ])
   },
   filters: {

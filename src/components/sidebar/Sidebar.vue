@@ -1,8 +1,10 @@
 <template>
   <aside class="sidebar">
     <div>
-      <input type="text" v-model="address" />
-      <button @click="search">Search</button>
+      <input type="text" v-model="address" placeholder="Enter location..." />
+      <button @click="search">
+        <i class="fas fa-search" />
+      </button>
     </div>
     <degrees-monitor />
   </aside>
@@ -29,8 +31,8 @@ export default {
   },
 
   methods: {
-    search(){
-      this.$store.dispatch("getInfo", this.address)
+    search() {
+      this.$store.dispatch("getInfo", this.address);
     }
   }
 };

@@ -4,7 +4,11 @@ import { objectIsEmpty } from "@/utils/check-helper";
 
 export default {
   state: {
-    geocoding: {}
+    geocoding: {
+      address: "",
+      lat: null,
+      lon: null
+    }
   },
   getters: {
     address(state) {
@@ -13,6 +17,16 @@ export default {
       }
 
       return state.geocoding.address;
+    },
+    coords(state) {
+      if (!(state.geocoding.lat && state.geocoding.lon)) {
+        return {};
+      }
+
+      return {
+        lat: state.geocoding.lat,
+        lon: state.geocoding.lon
+      };
     }
   },
   mutations: {
