@@ -4,6 +4,7 @@ export default axios.create({
   baseURL: "https://api.openweathermap.org/data/2.5",
   headers: {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Accept-Language": "en"
   }
 });
