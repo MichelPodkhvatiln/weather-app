@@ -81,16 +81,19 @@ export default {
     }
   },
   actions: {
-    async changeUnits({ state, commit, dispatch }) {
+    async changeUnits({ rootState, state, commit, dispatch }) {
+      const lat = rootState.geocoding.geocoding.lat;
+      const lon = rootState.geocoding.geocoding.lon;
+
       if (state.units === "metric") {
         commit("setUnits", "imperial");
-        await dispatch("getForecast");
+        await dispatch("getForecast", { lat, lon });
         return;
       }
 
       if (state.units === "imperial") {
         commit("setUnits", "metric");
-        await dispatch("getForecast");
+        await dispatch("getForecast", { lat, lon });
         return;
       }
     },
