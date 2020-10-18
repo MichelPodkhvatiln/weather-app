@@ -6,10 +6,10 @@
       </span>
       <button class="current-temperature__monitor--units" @click="changeUnits">
         <span v-if="units === 'metric'">
-          °C
+          &deg;C
         </span>
         <span v-if="units === 'imperial'">
-          °F
+          &deg;F
         </span>
       </button>
     </div>
@@ -54,6 +54,7 @@ $accent: #000000;
 .current-temperature {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .current-temperature__monitor {

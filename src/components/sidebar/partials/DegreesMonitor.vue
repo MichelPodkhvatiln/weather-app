@@ -1,7 +1,9 @@
 <template>
   <div v-if="!isLoading" class="monitor">
     <current-temperature />
-    <temperature />
+    <extend-temperature />
+    <date-info />
+    <position-info />
   </div>
   <div v-else class="monitor--loading">
     <spring-spinner :animation-duration="3000" :size="60" color="#ffffff" />
@@ -14,14 +16,18 @@ import { objectIsEmpty } from "@/utils/check-helper";
 
 import { SpringSpinner } from "epic-spinners";
 import CurrentTemperature from "@/components/sidebar/partials/partials/CurrentTemperature";
-import Temperature from "@/components/sidebar/partials/partials/Temperature.vue";
+import ExtendTemperature from "@/components/sidebar/partials/partials/ExtendTemperature";
+import DateInfo from "@/components/sidebar/partials/partials/DateInfo";
+import PositionInfo from "@/components/sidebar/partials/partials/PositionInfo";
 
 export default {
   name: "DegreesMonitor",
 
   components: {
     CurrentTemperature,
-    Temperature,
+    ExtendTemperature,
+    DateInfo,
+    PositionInfo,
     SpringSpinner
   },
 
@@ -38,7 +44,7 @@ export default {
 <style scoped lang="scss">
 .monitor {
   display: grid;
-  grid-template-rows: 1fr 3fr;
+  grid-template-rows: 3fr 1fr 1fr 2fr;
   grid-template-columns: 1fr;
   padding: 10px;
 }
