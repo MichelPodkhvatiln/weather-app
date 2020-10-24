@@ -15,10 +15,10 @@ import { mapGetters } from "vuex";
 import { objectIsEmpty } from "@/utils/check-helper";
 
 import { SpringSpinner } from "epic-spinners";
-import CurrentTemperature from "@/components/sidebar/partials/partials/CurrentTemperature";
-import ExtendTemperature from "@/components/sidebar/partials/partials/ExtendTemperature";
-import DateInfo from "@/components/sidebar/partials/partials/DateInfo";
-import PositionInfo from "@/components/sidebar/partials/partials/PositionInfo";
+import CurrentTemperature from "@/components/sidebar/partials/_partial/CurrentTemperature";
+import ExtendTemperature from "@/components/sidebar/partials/_partial/ExtendTemperature";
+import DateInfo from "@/components/sidebar/partials/_partial/DateInfo";
+import PositionInfo from "@/components/sidebar/partials/_partial/PositionInfo";
 
 export default {
   name: "DegreesMonitor",

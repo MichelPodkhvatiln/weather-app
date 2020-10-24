@@ -2,18 +2,21 @@
   <div id="app">
     <main class="main">
       <sidebar />
+      <dashboard />
     </main>
   </div>
 </template>
 
 <script>
 import Sidebar from "@/components/sidebar/Sidebar";
+import Dashboard from "@/components/dashboard/Dashboard";
 
 export default {
   name: "App",
 
   components: {
-    Sidebar
+    Sidebar,
+    Dashboard
   }
 };
 </script>
