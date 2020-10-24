@@ -27,7 +27,7 @@ export default {
     dailyForecast(state) {
       return state.forecast.daily;
     },
-    hourlyForecats(state) {
+    hourlyForecast(state) {
       return state.forecast.hourly;
     },
     currentTemp(state) {
