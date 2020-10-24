@@ -16,17 +16,17 @@ import moment from "moment";
 import LineChart from "@/components/charts/Line";
 
 export default {
-  name: "HourlyForecast",
+  name: "DailyForecast",
 
   components: {
     LineChart
   },
 
   computed: {
-    ...mapGetters("forecast", ["hourlyForecast"]),
+    ...mapGetters("forecast", ["dailyForecast"]),
 
     loaded() {
-      return !!this.hourlyForecast.length;
+      return !!this.dailyForecast.length;
     },
 
     chartData() {
@@ -34,13 +34,23 @@ export default {
         labels: this.labelsData,
         datasets: [
           {
-            label: "Hourly temperature",
-            data: this.tempsData,
-            backgroundColor: "#4d9ac51a",
+            label: "Min",
+            data: this.minTempsData,
             borderColor: "#8bb0e2",
             borderWidth: 3,
             pointBackgroundColor: "#8bb0e2",
-            pointHoverRadius: 7
+            pointHoverRadius: 7,
+            fill: false
+          },
+          {
+            label: "Max",
+            data: this.maxTempsData,
+            backgroundColor: "#e28bb81a",
+            borderColor: "#e28bb8",
+            borderWidth: 3,
+            pointBackgroundColor: "#e28bb8",
+            pointHoverRadius: 7,
+            fill: "-1"
           }
         ]
       };
@@ -51,22 +61,10 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         lineTension: 1,
-        scales: {
-          xAxes: [
-            {
-              gridLines: {
-                display: false
-              }
-            }
-          ],
-          yAxes: [
-            {
-              scaleLabel: {}
-            }
-          ]
-        },
-        legend: {
-          onClick: () => {}
+        plugins: {
+          filler: {
+            propagate: true
+          }
         }
       };
     },
@@ -80,23 +78,20 @@ export default {
     },
 
     labelsData() {
-      const data = this.hourlyForecast.map(hourItem =>
-        moment(hourItem.dt).format("DD MMMM HH:mm")
+      return this.dailyForecast.map(hourItem =>
+        moment(hourItem.dt).format("DD MMMM")
       );
-
-      return data.slice(1, 26);
     },
 
-    tempsData() {
-      const data = this.hourlyForecast.map(hourItem => hourItem.temp);
+    minTempsData() {
+      return this.dailyForecast.map(hourItem => hourItem.temp.min.toFixed());
+    },
 
-      return data.slice(1, 26);
+    maxTempsData() {
+      return this.dailyForecast.map(hourItem => hourItem.temp.max.toFixed());
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
-.chart__wrapper {
-}
-</style>
+<style scoped lang="scss"></style>
