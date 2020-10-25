@@ -1,11 +1,18 @@
 <template>
-  <section class="chart__wrapper">
-    <line-chart
-      v-if="loaded"
-      :chartdata="chartData"
-      :options="chartOptions"
-      :styles="chartStyles"
-    />
+  <section class="daily-section">
+    <nav class="daily-section__navbar">
+      <span class="daily-section__navbar--title">
+        Daily forecast
+      </span>
+    </nav>
+    <article class="chart__wrapper">
+      <line-chart
+        v-if="loaded"
+        :chart-data="chartData"
+        :options="chartOptions"
+        :styles="chartStyles"
+      />
+    </article>
   </section>
 </template>
 
@@ -81,23 +88,49 @@ export default {
     },
 
     labelsData() {
-      return this.dailyForecast.map(hourItem =>
+      const dataWithoutToday = this.dailyForecast.slice(1);
+      return dataWithoutToday.map(hourItem =>
         moment(hourItem.dt).format("DD MMMM")
       );
     },
 
     minTempsData() {
-      return this.dailyForecast.map(hourItem => hourItem.temp.min.toFixed());
+      const dataWithoutToday = this.dailyForecast.slice(1);
+      return dataWithoutToday.map(hourItem => hourItem.temp.min.toFixed());
     },
 
     maxTempsData() {
-      return this.dailyForecast.map(hourItem => hourItem.temp.max.toFixed());
+      const dataWithoutToday = this.dailyForecast.slice(1);
+      return dataWithoutToday.map(hourItem => hourItem.temp.max.toFixed());
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+$main: #ffffff;
+
+.daily-section {
+  color: $main;
+}
+
+.daily-section__navbar {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  height: 50px;
+  background-color: #a1c9e5;
+}
+
+.daily-section__navbar--title {
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+
+.hourly-section__navbar--button + .hourly-section__navbar--button {
+  margin: 10px;
+}
+
 .chart__wrapper {
   padding: 10px 40px;
 }

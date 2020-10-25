@@ -1,103 +1,160 @@
 <template>
-  <section class="chart__wrapper">
-    <line-chart
-      v-if="loaded"
-      :chartdata="chartData"
-      :options="chartOptions"
-      :styles="chartStyles"
-    />
+  <section class="hourly-section">
+    <nav class="hourly-section__navbar">
+      <span class="hourly-section__navbar--title">
+        Forecast for:
+      </span>
+      <button
+        class="hourly-section__navbar--button"
+        :class="activeOneDayClasses"
+        @click.prevent="changeMode('one-day')"
+      >
+        Day
+      </button>
+      <button
+        class="hourly-section__navbar--button"
+        :class="activeTwoDaysClasses"
+        @click.prevent="changeMode('two-days')"
+      >
+        Two days
+      </button>
+    </nav>
+
+    <article class="chart__wrapper">
+      <div class="chart">
+        <hourly-temp-chart :mode="mode" />
+      </div>
+      <div class="chart">
+        <humidity-chart :mode="mode" />
+      </div>
+      <div class="chart">
+        <pressure-chart :mode="mode" />
+      </div>
+    </article>
   </section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import moment from "moment";
-
-import LineChart from "@/components/charts/LineChart.vue";
+import HourlyTempChart from "@/components/dashboard/_partial/_partial/_hourly/HourlyTempChart.vue";
+import HumidityChart from "@/components/dashboard/_partial/_partial/_hourly/HumidityChart";
+import PressureChart from "@/components/dashboard/_partial/_partial/_hourly/PressureChart";
 
 export default {
   name: "HourlyForecast",
 
+  data() {
+    return {
+      mode: "one-day"
+    };
+  },
+
   components: {
-    LineChart
+    HourlyTempChart,
+    HumidityChart,
+    PressureChart
   },
 
   computed: {
-    ...mapGetters("forecast", ["hourlyForecast"]),
-
-    loaded() {
-      return !!this.hourlyForecast.length;
-    },
-
-    chartData() {
+    activeOneDayClasses() {
       return {
-        labels: this.labelsData,
-        datasets: [
-          {
-            label: "Hourly temperature",
-            data: this.tempsData,
-            backgroundColor: "#4d9ac51a",
-            borderColor: "#8bb0e2",
-            borderWidth: 3,
-            pointBackgroundColor: "#8bb0e2",
-            pointHoverRadius: 7
-          }
-        ]
+        "active-button": this.mode === "one-day"
       };
     },
 
-    chartOptions() {
+    activeTwoDaysClasses() {
       return {
-        responsive: true,
-        maintainAspectRatio: false,
-        lineTension: 1,
-        scales: {
-          xAxes: [
-            {
-              gridLines: {
-                display: false
-              }
-            }
-          ],
-          yAxes: [
-            {
-              scaleLabel: {}
-            }
-          ]
-        },
-        legend: {
-          onClick: () => {}
-        }
+        "active-button": this.mode === "two-days"
       };
-    },
+    }
+  },
 
-    chartStyles() {
-      return {
-        height: "350px",
-        width: "100%",
-        position: "relative"
-      };
-    },
-
-    labelsData() {
-      const data = this.hourlyForecast.map(hourItem =>
-        moment(hourItem.dt).format("DD MMMM HH:mm")
-      );
-
-      return data.slice(1, 26);
-    },
-
-    tempsData() {
-      const data = this.hourlyForecast.map(hourItem => hourItem.temp);
-
-      return data.slice(1, 26);
+  methods: {
+    changeMode(value) {
+      this.mode = value;
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+$main: #ffffff;
+$accent: #000000;
+
+@mixin main-styling($main) {
+  padding: 7px 10px;
+  color: rgba($main, 0.85);
+  font-size: 0.8rem;
+  background-color: rgba($main, 0.2);
+  border: 1px solid rgba($main, 1);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+@mixin on-actions-style($accent) {
+  transition: all 0.3s ease-in-out;
+
+  &:not([disabled]) {
+    &:hover {
+      color: rgba($main, 1);
+      background: rgba($accent, 0.1);
+
+      &::placeholder {
+        color: rgba($main, 1);
+      }
+    }
+
+    &:focus {
+      color: rgba($main, 1);
+      outline: none;
+      background: rgba($accent, 0.1);
+
+      &::placeholder {
+        color: rgba($main, 1);
+      }
+    }
+  }
+}
+
+.hourly-section {
+  color: $main;
+}
+
+.hourly-section__navbar {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  height: 50px;
+  background-color: #a1c9e5;
+}
+
+.hourly-section__navbar--title {
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+
+.hourly-section__navbar--button {
+  padding: 7px;
+  min-width: 100px;
+  @include main-styling($main);
+  @include on-actions-style($accent);
+}
+
+.active-button {
+  background-color: rgba($accent, 0.1);
+}
+
+.hourly-section__navbar--button + .hourly-section__navbar--button {
+  margin: 10px;
+}
+
 .chart__wrapper {
   padding: 10px 40px;
+}
+
+.chart {
+  margin-bottom: 20px;
 }
 </style>

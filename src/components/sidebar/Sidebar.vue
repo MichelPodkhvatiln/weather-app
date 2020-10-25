@@ -39,5 +39,6 @@ export default {
   color: whitesmoke;
   background-color: #4d9ac5;
   background-image: linear-gradient(0deg, #4d9ac5 0%, #8bb0e2 100%);
+  border-right: 1px solid #ffffff;
 }
 </style>

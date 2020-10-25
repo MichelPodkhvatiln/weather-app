@@ -39,10 +39,10 @@ export default {
 <style scoped lang="scss">
 .dashboard {
   display: grid;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 </style>

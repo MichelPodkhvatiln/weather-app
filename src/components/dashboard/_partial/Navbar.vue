@@ -12,7 +12,7 @@
       :class="dailyActiveClasses"
       @click.prevent="onSelectTab('daily')"
     >
-      Daily
+      Weekend
     </button>
   </nav>
 </template>
@@ -93,7 +93,7 @@ $accent: #000000;
   align-items: center;
   padding: 5px 10px;
   height: 50px;
-  background-color: #aecdec;
+  background-color: #72afd7;
 }
 
 .navbar__tab {
