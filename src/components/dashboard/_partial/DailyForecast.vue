@@ -13,7 +13,7 @@
 import { mapGetters } from "vuex";
 import moment from "moment";
 
-import LineChart from "@/components/charts/Line";
+import LineChart from "@/components/charts/LineChart.vue";
 
 export default {
   name: "DailyForecast",
@@ -65,6 +65,9 @@ export default {
           filler: {
             propagate: true
           }
+        },
+        legend: {
+          onClick: () => {}
         }
       };
     },
@@ -94,4 +97,8 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.chart__wrapper {
+  padding: 10px 40px;
+}
+</style>
